@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Inspirational quotes to help you scan, read, reflect, and lead. Curated wisdom across success, leadership, motivation, resilience, adaptability, and teamwork.">
+<meta name="keywords" content="inspirational quotes, motivation, leadership, success, resilience, teamwork">
+<meta name="author" content="ahmad93aed-code">
+<meta name="theme-color" content="#071b2d">
+<title>Inspiration — Scan. Read. Reflect. Lead.</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#071b2d;color:#17283d;font-family:Arial,Helvetica,sans-serif}
+main{max-width:760px;margin:0 auto;padding:24px 16px 50px}
+header{background:white;border-radius:20px;padding:28px 22px;text-align:center;margin-bottom:16px}
+h1{margin:0;color:#071b2d;font-size:34px}header p{margin:8px 0 0;color:#b8860b;font-weight:bold;letter-spacing:1px}
+nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+button{border:0;border-radius:999px;padding:10px 14px;background:#e9edf1;color:#17283d;font-weight:bold;cursor:pointer;transition:all 0.2s ease}
+button:hover{background:#d0d5dc}
+button.active{background:#b8860b;color:white}
+button:focus{outline:2px solid #b8860b;outline-offset:2px}
+#quote{background:white;border-radius:20px;padding:25px 22px;margin-bottom:16px;box-shadow:0 4px 16px rgba(0,0,0,0.1);min-height:200px;display:flex;flex-direction:column;justify-content:center}
+.category{color:#b8860b;font-weight:bold;letter-spacing:1.5px;font-size:12px;text-transform:uppercase}
+.quote{font-size:25px;line-height:1.45;margin:12px 0;font-style:italic}
+.attribution{color:#667;font-size:15px;margin-top:8px}
+.quote-actions{display:flex;gap:10px;margin-top:16px}
+.btn-small{background:#f0f0f0;border:1px solid #ddd;border-radius:6px;padding:8px 12px;cursor:pointer;font-size:13px;transition:all 0.2s ease}
+.btn-small:hover{background:#e0e0e0}
+.copy-feedback{color:#b8860b;font-size:12px;margin-left:8px;display:none}
+section{background:white;border-radius:18px;padding:20px 22px;margin:14px 0}
+h2{margin:0 0 10px;color:#b8860b;font-size:18px}
+li{margin:12px 0;line-height:1.5}
+footer{text-align:center;color:#fff;padding-top:14px;font-size:14px}
+footer a{color:#b8860b;text-decoration:none}
+footer a:hover{text-decoration:underline}
+@media (max-width: 600px) {
+  h1{font-size:28px}
+  .quote{font-size:20px}
+  button{padding:8px 12px;font-size:14px}
+  #quote{min-height:180px;padding:20px 16px}
+}
+</style>
+</head>
+<body>
+<main>
+<header>
+<h1>Inspiration</h1>
+<p>SCAN. READ. REFLECT. LEAD.</p>
+<nav id="nav" role="tablist" aria-label="Quote categories"></nav>
+</header>
+<div id="quote" role="region" aria-live="polite" aria-label="Current quote"></div>
+<div id="collections"></div>
+<footer>
+Be kind. Be respectful. Be supportive.<br>
+Stronger together. Better every day.<br>
+<a href="https://github.com/ahmad93aed-code/Inspirational-Quotes" target="_blank" rel="noopener noreferrer">View on GitHub</a> • Built with ❤️
+</footer>
+</main>
+<script>
+const quotes = {
+SUCCESS:[
+["Progress is built one step at a time.",""],
+["Success grows when preparation meets opportunity.",""],
+["Small improvements, repeated consistently, create big results.",""],
+["The goal is progress, not perfection.",""],
+["Consistency turns effort into achievement.",""]
+],
+LEADERSHIP:[
+["Leadership starts with responsibility, not authority.",""],
+["The best leaders make other people stronger.",""],
+["Listen first. Lead second.",""],
+["Clarity creates confidence.",""],
+["Leadership means making space for others to contribute.",""]
+],
+MOTIVATION:[
+["Take the next right step.",""],
+["Action creates momentum.",""],
+["Start small, but start.",""],
+["Bring energy to what matters most.",""],
+["Choose progress over excuses.",""]
+],
+RESILIENCE:[
+["Rise, learn and keep moving.",""],
+["Setbacks are information, not identity.",""],
+["Resilience is the decision to keep learning.",""],
+["Learn, adjust, try again.",""],
+["Recovery is progress.",""]
+],
+"CHANGE & ADAPTABILITY":[
+["Change creates space for growth.",""],
+["Adaptability is the ability to keep moving while the path changes.",""],
+["When the environment changes, improve the way you respond.",""],
+["Do not fear a new approach simply because the old one is familiar.",""],
+["Change becomes easier when people understand the purpose behind it.",""]
+],
+"TEAMWORK & PEOPLE":[
+["Every interaction is an opportunity to make a positive difference.",""],
+["Great teams grow when people feel valued, supported and heard.",""],
+["The strongest teams make room for every voice.",""],
+["Support the people around you and the whole team becomes stronger.",""],
+["We all play a part in making our workplace a great place to be.",""]
+]
+};
+
+const nav=document.getElementById("nav"), quote=document.getElementById("quote"), collections=document.getElementById("collections");
+const cats=Object.keys(quotes);
+
+// Build navigation buttons
+cats.forEach((cat,i)=>{
+ const b=document.createElement("button");
+ b.textContent=cat.replace(" & ADAPTABILITY","").replace(" & PEOPLE","");
+ b.setAttribute("role","tab");
+ b.setAttribute("aria-selected", i===0 ? "true" : "false");
+ b.onclick=()=>show(cat);
+ if(i===0)b.classList.add("active");
+ nav.appendChild(b);
+});
+
+// Display quote and update active category
+function show(cat){
+ document.querySelectorAll("button").forEach(b=>{
+   const isActive = b.textContent===cat.replace(" & ADAPTABILITY","").replace(" & PEOPLE","");
+   b.classList.toggle("active", isActive);
+   b.setAttribute("aria-selected", isActive ? "true" : "false");
+ });
+ const list=quotes[cat], item=list[Math.floor(Math.random()*list.length)];
+ quote.innerHTML='<div class="category">'+cat+'</div><div class="quote">"'+item[0]+'"</div>'+(item[1]?'<div class="attribution">— '+item[1]+'</div>':'')+'<div class="quote-actions"><button class="btn-small" onclick="copyQuote()">📋 Copy</button><span class="copy-feedback" id="feedback">Copied!</span></div>';
+}
+
+// Copy quote to clipboard
+function copyQuote(){
+ const quoteText = document.querySelector(".quote")?.textContent || "";
+ const attribution = document.querySelector(".attribution")?.textContent || "";
+ const fullText = quoteText + (attribution ? " " + attribution : "");
+ navigator.clipboard.writeText(fullText).then(()=>{
+   const feedback = document.getElementById("feedback");
+   feedback.style.display="inline";
+   setTimeout(()=>feedback.style.display="none", 2000);
+ });
+}
+
+// Build collections
+cats.forEach(cat=>{
+ let html='<section><h2>'+cat+'</h2><ul>';
+ quotes[cat].forEach(q=>html+='<li>"'+q[0]+'"'+(q[1]?' — '+q[1]:'')+"</li>");
+ html+='</ul></section>';
+ collections.innerHTML+=html;
+});
+
+// Show first category on load
+show(cats[0]);
+</script>
+</body>
+</html>
