@@ -1,101 +1,459 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Inspiration — Scan. Read. Reflect. Lead.</title>
-<style>
-*{box-sizing:border-box}body{margin:0;background:#071b2d;color:#17283d;font-family:Arial,Helvetica,sans-serif}
-main{max-width:760px;margin:0 auto;padding:24px 16px 50px}
-header{background:white;border-radius:20px;padding:28px 22px;text-align:center;margin-bottom:16px}
-h1{margin:0;color:#071b2d;font-size:34px}header p{margin:8px 0 0;color:#b8860b;font-weight:bold;letter-spacing:1px}
-nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:18px}
-button{border:0;border-radius:999px;padding:10px 14px;background:#e9edf1;color:#17283d;font-weight:bold;cursor:pointer}
-button.active{background:#b8860b;color:white}
-#quote{background:white;border-radius:20px;padding:25px 22px;margin-bottom:16px;box-shadow:0 4px 16px #0002}
-.category{color:#b8860b;font-weight:bold;letter-spacing:1.5px}
-.quote{font-size:25px;line-height:1.45;margin:12px 0}
-.attribution{color:#667;font-size:15px}
-section{background:white;border-radius:18px;padding:20px 22px;margin:14px 0}
-h2{margin:0 0 10px;color:#b8860b}
-li{margin:12px 0;line-height:1.5}
-footer{text-align:center;color:#fff;padding-top:14px;font-size:14px}
-</style>
-</head>
-<body>
-<main>
-<header>
-<h1>Inspiration</h1>
-<p>SCAN. READ. REFLECT. LEAD.</p>
-<nav id="nav"></nav>
-</header>
-<div id="quote"></div>
-<div id="collections"></div>
-<footer>Be kind. Be respectful. Be supportive.<br>Stronger together. Better every day.</footer>
-</main>
-<script>
-const quotes = {
-SUCCESS:[
-["Progress is built one step at a time.",""],
-["Success grows when preparation meets opportunity.",""],
-["Small improvements, repeated consistently, create big results.",""],
-["The goal is progress, not perfection.",""],
-["Consistency turns effort into achievement.",""]
-],
-LEADERSHIP:[
-["Leadership starts with responsibility, not authority.",""],
-["The best leaders make other people stronger.",""],
-["Listen first. Lead second.",""],
-["Clarity creates confidence.",""],
-["Leadership means making space for others to contribute.",""]
-],
-MOTIVATION:[
-["Take the next right step.",""],
-["Action creates momentum.",""],
-["Start small, but start.",""],
-["Bring energy to what matters most.",""],
-["Choose progress over excuses.",""]
-],
-RESILIENCE:[
-["Rise, learn and keep moving.",""],
-["Setbacks are information, not identity.",""],
-["Resilience is the decision to keep learning.",""],
-["Learn, adjust, try again.",""],
-["Recovery is progress.",""]
-],
-"CHANGE & ADAPTABILITY":[
-["Change creates space for growth.",""],
-["Adaptability is the ability to keep moving while the path changes.",""],
-["When the environment changes, improve the way you respond.",""],
-["Do not fear a new approach simply because the old one is familiar.",""],
-["Change becomes easier when people understand the purpose behind it.",""]
-],
-"TEAMWORK & PEOPLE":[
-["Every interaction is an opportunity to make a positive difference.",""],
-["Great teams grow when people feel valued, supported and heard.",""],
-["The strongest teams make room for every voice.",""],
-["Support the people around you and the whole team becomes stronger.",""],
-["We all play a part in making our workplace a great place to be.",""]
-]
-};
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-const nav=document.getElementById("nav"), quote=document.getElementById("quote"), collections=document.getElementById("collections");
-const cats=Object.keys(quotes);
-cats.forEach((cat,i)=>{
- const b=document.createElement("button"); b.textContent=cat.replace(" & ADAPTABILITY","").replace(" & PEOPLE","");
- b.onclick=()=>show(cat); if(i===0)b.classList.add("active"); nav.appendChild(b);
-});
-function show(cat){
- document.querySelectorAll("button").forEach(b=>b.classList.toggle("active",b.textContent===cat.replace(" & ADAPTABILITY","").replace(" & PEOPLE","")));
- const list=quotes[cat], item=list[Math.floor(Math.random()*list.length)];
- quote.innerHTML='<div class="category">'+cat+'</div><div class="quote">“'+item[0]+'”</div>'+(item[1]?'<div class="attribution">— '+item[1]+'</div>':'');
-}
-cats.forEach(cat=>{
- let html='<section><h2>'+cat+'</h2><ul>';
- quotes[cat].forEach(q=>html+='<li>“'+q[0]+'”'+(q[1]?' — '+q[1]:'')+'</li>');
- html+='</ul></section>'; collections.innerHTML+=html;
-});
-show(cats[0]);
-</script>
+  <title>Inspirational Quotes</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #f4f7fb, #e8eef6);
+      color: #1f2937;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 700px;
+      text-align: center;
+    }
+
+    .header {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 28px 20px 22px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      margin-bottom: 18px;
+    }
+
+    .header h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+      color: #17365d;
+    }
+
+    .header p {
+      margin: 0;
+      color: #667085;
+      font-size: 15px;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .category-btn {
+      border: none;
+      border-radius: 12px;
+      padding: 14px 10px;
+      background: #ffffff;
+      color: #17365d;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+      transition: 0.2s ease;
+    }
+
+    .category-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .category-btn.active {
+      background: #17365d;
+      color: #ffffff;
+    }
+
+    .quote-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 35px 25px;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.09);
+    }
+
+    .category-label {
+      font-size: 13px;
+      font-weight: bold;
+      letter-spacing: 1.5px;
+      color: #667085;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    .quote {
+      font-size: 25px;
+      line-height: 1.5;
+      font-weight: 600;
+      color: #17365d;
+      margin: 0;
+    }
+
+    .author {
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #667085;
+    }
+
+    .next-btn {
+      margin-top: 25px;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 28px;
+      background: #17365d;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .next-btn:hover {
+      transform: translateY(-2px);
+      opacity: 0.92;
+    }
+
+    .footer {
+      margin-top: 18px;
+      color: #667085;
+      font-size: 13px;
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 12px;
+      }
+
+      .header h1 {
+        font-size: 25px;
+      }
+
+      .categories {
+        grid-template-columns: 1fr;
+      }
+
+      .quote-card {
+        padding: 30px 20px;
+        min-height: 300px;
+      }
+
+      .quote {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+
+    <section class="header">
+      <h1>Inspirational Quotes</h1>
+      <p>Choose a category and discover a little inspiration.</p>
+    </section>
+
+    <section class="categories">
+
+      <button class="category-btn active" onclick="selectCategory('success', this)">
+        Success
+      </button>
+
+      <button class="category-btn" onclick="selectCategory('leadership', this)">
+        Leadership
+      </button>
+
+      <button class="category-btn" onclick="selectCategory('motivation', this)">
+        Motivation
+      </button>
+
+      <button class="category-btn" onclick="selectCategory('resilience', this)">
+        Resilience
+      </button>
+
+      <button class="category-btn" onclick="selectCategory('change', this)">
+        Change & Adaptability
+      </button>
+
+      <button class="category-btn" onclick="selectCategory('teamwork', this)">
+        Teamwork & People
+      </button>
+
+    </section>
+
+    <section class="quote-card">
+
+      <div class="category-label" id="categoryLabel">
+        Success
+      </div>
+
+      <p class="quote" id="quoteText">
+        Success is the sum of small efforts, repeated day in and day out.
+      </p>
+
+      <div class="author" id="quoteAuthor">
+        — Robert Collier
+      </div>
+
+      <button class="next-btn" onclick="nextQuote()">
+        Next Quote
+      </button>
+
+    </section>
+
+    <div class="footer">
+      Take a moment. Reflect. Be inspired. Make a difference.
+    </div>
+
+  </main>
+
+  <script>
+
+    const quotes = {
+
+      success: [
+        {
+          text: "Success is the sum of small efforts, repeated day in and day out.",
+          author: "Robert Collier"
+        },
+        {
+          text: "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+          author: "Winston Churchill"
+        },
+        {
+          text: "The secret of getting ahead is getting started.",
+          author: "Mark Twain"
+        },
+        {
+          text: "Success usually comes to those who are too busy to be looking for it.",
+          author: "Henry David Thoreau"
+        },
+        {
+          text: "Don't be afraid to give up the good to go for the great.",
+          author: "John D. Rockefeller"
+        },
+        {
+          text: "Great things are done by a series of small things brought together.",
+          author: "Vincent van Gogh"
+        }
+      ],
+
+      leadership: [
+        {
+          text: "Leadership is not about being in charge. It is about taking care of those in your charge.",
+          author: "Simon Sinek"
+        },
+        {
+          text: "A leader is one who knows the way, goes the way, and shows the way.",
+          author: "John C. Maxwell"
+        },
+        {
+          text: "The greatest leader is not necessarily the one who does the greatest things. They are the one who gets people to do the greatest things.",
+          author: "Ronald Reagan"
+        },
+        {
+          text: "Leadership is the capacity to translate vision into reality.",
+          author: "Warren Bennis"
+        },
+        {
+          text: "A good leader inspires people to have confidence in the leader. A great leader inspires people to have confidence in themselves.",
+          author: "Eleanor Roosevelt"
+        },
+        {
+          text: "People buy into the leader before they buy into the vision.",
+          author: "John C. Maxwell"
+        }
+      ],
+
+      motivation: [
+        {
+          text: "The only way to do great work is to love what you do.",
+          author: "Steve Jobs"
+        },
+        {
+          text: "It always seems impossible until it's done.",
+          author: "Nelson Mandela"
+        },
+        {
+          text: "Believe you can and you're halfway there.",
+          author: "Theodore Roosevelt"
+        },
+        {
+          text: "The future depends on what you do today.",
+          author: "Mahatma Gandhi"
+        },
+        {
+          text: "Start where you are. Use what you have. Do what you can.",
+          author: "Arthur Ashe"
+        },
+        {
+          text: "You don't have to be great to start, but you have to start to be great.",
+          author: "Zig Ziglar"
+        }
+      ],
+
+      resilience: [
+        {
+          text: "Our greatest glory is not in never falling, but in rising every time we fall.",
+          author: "Confucius"
+        },
+        {
+          text: "You may have to fight a battle more than once to win it.",
+          author: "Margaret Thatcher"
+        },
+        {
+          text: "Difficulties in life are intended to make us better, not bitter.",
+          author: "Dan Reeves"
+        },
+        {
+          text: "Rock bottom became the solid foundation on which I rebuilt my life.",
+          author: "J.K. Rowling"
+        },
+        {
+          text: "Life doesn't get easier or more forgiving; we get stronger and more resilient.",
+          author: "Steve Maraboli"
+        },
+        {
+          text: "Fall seven times and stand up eight.",
+          author: "Japanese Proverb"
+        }
+      ],
+
+      change: [
+        {
+          text: "Change is the only constant in life.",
+          author: "Heraclitus"
+        },
+        {
+          text: "The measure of intelligence is the ability to change.",
+          author: "Albert Einstein"
+        },
+        {
+          text: "Adaptability is about the powerful difference between adapting to cope and adapting to win.",
+          author: "Max McKeown"
+        },
+        {
+          text: "If you want to make enemies, try to change something.",
+          author: "Woodrow Wilson"
+        },
+        {
+          text: "Everyone thinks of changing the world, but no one thinks of changing himself.",
+          author: "Leo Tolstoy"
+        },
+        {
+          text: "Progress is impossible without change.",
+          author: "George Bernard Shaw"
+        }
+      ],
+
+      teamwork: [
+        {
+          text: "Alone we can do so little; together we can do so much.",
+          author: "Helen Keller"
+        },
+        {
+          text: "Talent wins games, but teamwork and intelligence win championships.",
+          author: "Michael Jordan"
+        },
+        {
+          text: "Coming together is a beginning. Keeping together is progress. Working together is success.",
+          author: "Henry Ford"
+        },
+        {
+          text: "Great things in business are never done by one person. They're done by a team of people.",
+          author: "Steve Jobs"
+        },
+        {
+          text: "Teamwork makes the dream work.",
+          author: "John C. Maxwell"
+        },
+        {
+          text: "The strength of the team is each individual member. The strength of each member is the team.",
+          author: "Phil Jackson"
+        }
+      ]
+
+    };
+
+    let currentCategory = "success";
+    let currentQuoteIndex = 0;
+
+    function showQuote(index) {
+
+      const categoryQuotes = quotes[currentCategory];
+      const quote = categoryQuotes[index];
+
+      document.getElementById("quoteText").textContent = quote.text;
+      document.getElementById("quoteAuthor").textContent = "— " + quote.author;
+
+      const label = currentCategory
+        .replace("change", "Change & Adaptability")
+        .replace("teamwork", "Teamwork & People");
+
+      document.getElementById("categoryLabel").textContent =
+        label.charAt(0).toUpperCase() + label.slice(1);
+
+    }
+
+    function selectCategory(category, button) {
+
+      currentCategory = category;
+
+      currentQuoteIndex = Math.floor(
+        Math.random() * quotes[category].length
+      );
+
+      document.querySelectorAll(".category-btn").forEach(function(btn) {
+        btn.classList.remove("active");
+      });
+
+      button.classList.add("active");
+
+      showQuote(currentQuoteIndex);
+    }
+
+    function nextQuote() {
+
+      const categoryQuotes = quotes[currentCategory];
+
+      if (categoryQuotes.length <= 1) {
+        return;
+      }
+
+      let newIndex;
+
+      do {
+        newIndex = Math.floor(
+          Math.random() * categoryQuotes.length
+        );
+      } while (newIndex === currentQuoteIndex);
+
+      currentQuoteIndex = newIndex;
+
+      showQuote(currentQuoteIndex);
+    }
+
+    showQuote(currentQuoteIndex);
+
+  </script>
+
 </body>
 </html>
